@@ -1,8 +1,15 @@
 package org.corebaseit.jwtrenewal;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class JwtRenewalWithValidation {
+
+    private static final Logger LOG = Logger.getLogger(JwtRenewalWithValidation.class.getName());
+    private static final int JSON_PRETTY_INDENT = 4;
 
     public static void main(String[] args) {
         String jsonString = "{\n" +
@@ -31,7 +38,7 @@ public class JwtRenewalWithValidation {
             JSONObject root = new JSONObject(jsonString);
 
             System.out.println("========= Raw JSON (Pretty Printed) =========");
-            System.out.println(root.toString(4));
+            System.out.println(root.toString(JSON_PRETTY_INDENT));
 
             boolean success = root.optBoolean("success", false);
             System.out.println("\nSuccess: " + success);
@@ -76,8 +83,11 @@ public class JwtRenewalWithValidation {
                 System.out.println("Main API Key: " + apiKey);
             }
 
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (JSONException ex) {
+            LOG.log(Level.SEVERE, "Failed to parse JSON payload", ex);
+        } catch (Exception ex) {
+            LOG.log(Level.SEVERE, "Unexpected error while processing JSON", ex);
         }
     }
+
 }
