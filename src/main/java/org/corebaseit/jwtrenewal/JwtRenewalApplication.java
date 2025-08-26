@@ -66,7 +66,7 @@ public class JwtRenewalApplication {
             System.out.println("Main API Key: " + apiKey);
 
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println("Error processing JSON: " + e.getMessage());
         }
     }
 }
